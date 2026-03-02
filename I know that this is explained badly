@@ -27,48 +27,47 @@ YourBotLittlePeanut = "MyOwnYappyBot.txt"
 # --------------------------------
 # remember about the "," at the end of each message, aswell as remember that the last message cannot have ,
 YourBotThoughts = [
-"hi hello haii",
-"last message"
+    "hi hello haii",
+    "last message"
 ]
 
 if not os.path.exists(YourBotLittlePeanut):
-with open(YourBotLittlePeanut, "w", encoding="utf-8") as f:
-for odp in YourBotThoughts:
-f.write(odp + "\n")
+    with open(YourBotLittlePeanut, "w", encoding="utf-8") as f:
+        for odp in YourBotThoughts:
+            f.write(odp + "\n")
 
 def BotReplies():
-with open(YourBotLittlePeanut, "r", encoding="utf-8") as f:
-return [linia.strip() for linia in f.readlines() if linia.strip()]
+    with open(YourBotLittlePeanut, "r", encoding="utf-8") as f:
+        return [linia.strip() for linia in f.readlines() if linia.strip()]
 
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
- 
 @client.event
 async def on_ready():
-print(f'your bot is awake! {client.user}')
+    print(f'your bot is awake! {client.user}')
 
 @client.event
 async def on_message(message):
-if message.author == client.user:
-return
+    if message.author == client.user:
+        return
 
-# this is the learning messages thing, at "if random.random() < 0.50:" is where you change the chances
-# of how often your bot will learn user sent messages
-# just edit the "0.50" I set it up as 0.5 (50%) cuz I think its quite decent
-if random.random() < 0.50:
-ILoveLearning = message.content.strip()
-if 2 < len(ILoveLearning) < 200 and "@" not in ILoveLearning:
- with open(YourBotLittlePeanut, "a", encoding="utf-8") as f:
- f.write(ILoveLearning + "\n")
+    # this is the learning messages thing, at "if random.random() < 0.50:" is where you change the chances
+    # of how often your bot will learn user sent messages
+    # just edit the "0.50" I set it up as 0.5 (50%) cuz I think its quite decent
+    if random.random() < 0.50:
+        ILoveLearning = message.content.strip()
+        if 2 < len(ILoveLearning) < 200 and "@" not in ILoveLearning:
+            with open(YourBotLittlePeanut, "a", encoding="utf-8") as f:
+                f.write(ILoveLearning + "\n")
 
-# same stuff as above just this time is where you change the chances of how often your bot
-# will reply to random messages, that do not need to include the bots name
-randomlyTalksBack = random.random() < 0.30
-pinged = client.user in message.mentions
-# mentioned = "bot" is where you type the word that your bot will react to 
-# for example if you type bot, the bot will just send one of his set up messages, just edit the "bot" into something else like maybe "sandwich" mmm sandwich...
+    # same stuff as above just this time is where you change the chances of how often your bot
+    # will reply to random messages, that do not need to include the bots name
+    randomlyTalksBack = random.random() < 0.30
+    pinged = client.user in message.mentions
+    # mentioned = "bot" is where you type the word that your bot will react to 
+    # for example if you type bot, the bot will just send one of his set up messages, just edit the "bot" into something else like maybe "sandwich" mmm sandwich...
     mentioned = "bot" in message.content.lower()
     reply = message.reference and message.reference.resolved and message.reference.resolved.author == client.user
 
